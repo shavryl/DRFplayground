@@ -1,7 +1,5 @@
 
 .idea/
 db.sqlite3
-geckodriver.log
-geckodriver.exe
 __pycache__
 *.pyc
