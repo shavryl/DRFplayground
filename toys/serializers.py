@@ -6,9 +6,9 @@ class ToySerializer(serializers.Serializer):
 
     pk = serializers.IntegerField(read_only=True)
     name = serializers.CharField(max_length=15)
-    description = serializers.CharField(max_length=250, blank=True, default='')
+    description = serializers.CharField(max_length=250)
     release_date = serializers.DateTimeField()
-    toy_category = serializers.CharField(max_length=200, blank=False, default='')
+    toy_category = serializers.CharField(max_length=200)
     was_included_in_home = serializers.BooleanField(default=False)
 
     def create(self, validated_data):
