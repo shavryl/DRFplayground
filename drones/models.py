@@ -8,7 +8,7 @@ class DroneCategory(models.Model):
     name = models.CharField(max_length=250)
 
     class Meta:
-        ordering = ('name')
+        ordering = ('name',)
 
     def __str__(self):
         return self.name
@@ -25,7 +25,7 @@ class Drone(models.Model):
     inserted_timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = 'name'
+        ordering = ('name',)
 
     def __str__(self):
         return self.name
@@ -46,7 +46,7 @@ class Pilot(models.Model):
     inserted_timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = 'name'
+        ordering = ('name',)
 
     def __str__(self):
         return self.name
@@ -61,4 +61,4 @@ class Competition(models.Model):
     distance_achievement_date = models.DateTimeField()
 
     class Meta:
-        ordering = '-distance_in_feet'
+        ordering = ('-distance_in_feet',)
