@@ -26,3 +26,30 @@ class DroneSerializer(serializers.HyperlinkedModelSerializer):
         model = Drone
         fields = ('url', 'name', 'drone_category', 'manufacturing_date',
                   'has_it_competed', 'inserted_timestamp')
+
+
+class CompetitionSerializer(serializers.HyperlinkedModelSerializer):
+
+    drone = DroneSerializer()
+
+    class Meta:
+        model = Competition
+        fields = ('url', 'pk', 'distance_in_feet',
+                  'distance_achievement_date', 'drone')
+
+
+class PilotSerializer(serializers.HyperlinkedModelSerializer):
+
+    competitions = CompetitionSerializer(many=True, read_only=True)
+    gender = serializers.ChoiceField(
+        choices=Pilot.GENDER_CHOICES)
+    gender_description = serializers.CharField(
+        source='get_gender_display',
+        read_only=True)
+
+    class Meta:
+        model = Pilot
+        fields = ('url', 'name', 'gender', 'gender_description',
+                  'races_count', 'inserted_timestamp', 'competitions')
+
+
