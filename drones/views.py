@@ -12,6 +12,20 @@ from drones.serializers import PilotSerializer
 from drones.serializers import PilotCompetitionSerializer
 
 
+class ApiRoot(generics.GenericAPIView):
+
+    name = 'api-root'
+
+    def get(self, request, *args, **kwargs):
+
+        return Response({
+            'drone-categories': reverse(DroneCategoryList.name, request=request),
+            'drones': reverse(DroneList.name, request=request),
+            'pilots': reverse(PilotList.name, request=request),
+            'competitions': reverse(CompetitionList.name, request=request)
+        })
+
+
 class DroneCategoryList(generics.ListCreateAPIView):
 
     queryset = DroneCategory.objects.all()
