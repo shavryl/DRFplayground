@@ -103,11 +103,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS':
-        'drones.custompagination.LimitOffsetPaginationWithUpperBound',
-    'PAGE_SIZE': 4
+        'drones.custom_pagination.LimitOffsetPaginationWithUpperBound',
+    'PAGE_SIZE': 4,
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',
+        'rest_framework.filters.SearchFilter',
+    ),
 }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
