@@ -10,6 +10,7 @@ from drones.serializers import DroneCategorySerializer
 from drones.serializers import DroneSerializer
 from drones.serializers import PilotSerializer
 from drones.serializers import PilotCompetitionSerializer
+from drones.custom_filters import CompetitionFilter
 
 
 class ApiRoot(generics.GenericAPIView):
@@ -83,6 +84,9 @@ class CompetitionList(generics.ListCreateAPIView):
     queryset = Competition.objects.all()
     serializer_class = PilotCompetitionSerializer
     name = 'competition-list'
+    filter_class = CompetitionFilter
+    ordering_fields = ('distance_in_feet',
+                       'distance_achievement_date',)
 
 
 class CompetitionDetail(generics.RetrieveUpdateDestroyAPIView):
