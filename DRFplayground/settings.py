@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drones.apps.DronesConfig',
+    'toys.apps.ToysConfig',
     'django_filters',
     'rest_framework.authtoken',
 ]
@@ -123,10 +124,10 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.UserRateThrottle',
     ),
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '3/hour',
-        'user': '10/hour',
-        'drones': '20/hour',
-        'pilots': '15/hour',
+        'anon': '300/hour',
+        'user': '100/hour',
+        'drones': '200/hour',
+        'pilots': '150/hour',
     }
 }
 
