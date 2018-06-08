@@ -19,9 +19,34 @@ class DroneCategoryTest(APITestCase):
 
         new_drone_category_name = 'Hexacopter'
         response = self.post_drone_category(new_drone_category_name)
-        print("PK {0}".format(DroneCategory.objects.get().pk))
 
         assert response.status_code == status.HTTP_201_CREATED
         assert DroneCategory.objects.count() == 1
         assert DroneCategory.objects.get().name == new_drone_category_name
 
+    def test_post_existing_drone_category_name(self):
+
+        url = reverse(views.DroneCategoryList.name)
+        new_drone_category_name = 'Duplicated Copter'
+        data = {'name': new_drone_category_name}
+
+        response1 = self.post_drone_category(new_drone_category_name)
+        assert response1.status_code == status.HTTP_201_CREATED
+
+        response2 = self.post_drone_category(new_drone_category_name)
+        assert response2.status_code == status.HTTP_400_BAD_REQUEST
+
+    def test_filter_drone_category_by_name(self):
+
+        drone_category_name1 = 'Hexacopter'
+        self.post_drone_category(drone_category_name1)
+        drone_category_name2 = 'Octocopter'
+        self.post_drone_category(drone_category_name2)
+        filter_by_name = {'name': drone_category_name1}
+        url = '{0}?{1}'.format(
+            reverse(views.DroneCategoryList.name),
+            urlencode(filter_by_name))
+        response = self.client.get(url, format='json')
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data['count'] == 1
+        assert response.data['results'][0]['name'] == drone_category_name1
