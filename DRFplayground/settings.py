@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'toys.apps.ToysConfig',
     'django_filters',
     'rest_framework.authtoken',
+    'games.apps.GamesConfig',
 ]
 
 MIDDLEWARE = [
