@@ -1,30 +1,24 @@
 
 
-class FirstClass:
+class Person:
 
-    def setdata(self, value):
-        self.data = value
+    def __init__(self, name, job=None, pay=0):
+        self.name = name
+        self.job = job
+        self.pay = pay
 
-    def display(self):
-        print(self.data)
+    def last_name(self):
+        return self.name.split()[-1]
+
+    def give_raise(self, percent):
+        self.pay = int(self.pay * (1 + percent))
 
 
-class SecondClass(FirstClass):
 
-    def display(self):
-        print('Current value= "%s"' % self.data)
+if __name__ == '__main__':
 
+    sue = Person('Sue Bartender', 'Taxi driver', 500)
+    bob = Person('Bob Smith')
+    print(bob.last_name(), bob.pay)
+    print(sue.name, sue.give_raise(.15), sue.pay)
 
-class ThirdClass(SecondClass):
-
-    def __init__(self, value):
-        self.data = value
-
-    def __add__(self, other):
-        return ThirdClass(self.data + other)
-
-    def __str__(self):
-        return '[ThirdClass: %s]' % self.data
-
-    def mul(self, other):
-        self.data *= other
