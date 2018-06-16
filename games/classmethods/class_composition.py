@@ -1,6 +1,24 @@
 
 
-class Person:
+class AttrDisplay:
+    """
+    Provides an inheritable display overload method that shows
+    instances with their class names and a name=value pair for
+    each attribute stored on the instance itself (but not attrs
+    inherited from its classes). Can be mixed into any class,
+    and will work on any instance.
+    """
+    def gether_attrs(self):
+        attrs = []
+        for key in sorted(self.__dict__):
+            attrs.append('%s=%s' % (key, getattr(self, key)))
+        return ', '.join(attrs)
+
+    def __repr__(self):
+        return '[%s: %s]' % (self.__class__.__name__, self.gether_attrs())
+
+
+class Person(AttrDisplay):
 
     def __init__(self, name, job=None, pay=0):
         self.name = name
@@ -13,9 +31,6 @@ class Person:
     def give_raise(self, percent):
         self.pay = int(self.pay * (1 + percent))
 
-    def __repr__(self):
-        return '[Person: %s, %s]' % (self.name, self.pay)
-
 
 class Manager(Person):
 
@@ -27,9 +42,6 @@ class Manager(Person):
 
     def __getattr__(self, attr):
         return getattr(self.person, attr)
-
-    def __repr__(self):
-        return str(self.person)
 
 
 class Department:
