@@ -1,35 +1,4 @@
-
-
-class AttrDisplay:
-    """
-    Provides an inheritable display overload method that shows
-    instances with their class names and a name=value pair for
-    each attribute stored on the instance itself (but not attrs
-    inherited from its classes). Can be mixed into any class,
-    and will work on any instance.
-    """
-    def gether_attrs(self):
-        attrs = []
-        for key in sorted(self.__dict__):
-            attrs.append('%s=%s' % (key, getattr(self, key)))
-        return ', '.join(attrs)
-
-    def __repr__(self):
-        return '[%s: %s]' % (self.__class__.__name__, self.gether_attrs())
-
-
-class Person(AttrDisplay):
-
-    def __init__(self, name, job=None, pay=0):
-        self.name = name
-        self.job = job
-        self.pay = pay
-
-    def last_name(self):
-        return self.name.split()[-1]
-
-    def give_raise(self, percent):
-        self.pay = int(self.pay * (1 + percent))
+from games.classmethods.class_reference import Person
 
 
 class Manager(Person):
@@ -59,9 +28,6 @@ class Department:
     def show_all(self):
         for person in self.members:
             print(person)
-
-
-
 
 
 if __name__ == '__main__':
