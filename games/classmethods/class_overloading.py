@@ -39,10 +39,57 @@ class Iters:
             yield x
             print('next:', end='')
 
-
     def __contains__(self, x):
         print('contains: ', end='')
         return x in self.data
+
+
+class Empty:
+
+    def __getattr__(self, attrname):
+
+        if attrname == 'age':
+            return 40
+        else:
+            raise AttributeError(attrname)
+
+
+class AccessControl:
+
+    def __setattr__(self, attr, value):
+
+        if attr == 'age':
+            # not self.name = val or setattr 'cause of loop
+            self.__dict__[attr] = value + 10
+        else:
+            raise AttributeError(attr + ' not allowed')
+
+
+class PrivateExc(Exception):
+    pass
+
+
+class Privacy:
+    def __setattr__(self, attrname, value):
+        if attrname in self.privates:
+            raise PrivateExc(attrname, self)
+        else:
+            self.__dict__[attrname] = value
+
+
+class Test1(Privacy):
+    privates = ['age']
+
+
+class Test2(Privacy):
+    privates = ['name', 'pay']
+
+    def __init__(self):
+        self.__dict__['name'] = 'Tom'
+
+
+
+
 
 
 if __name__ == '__main__':
