@@ -90,8 +90,6 @@ class Test2(Privacy):
 
 
 
-
-
 if __name__ == '__main__':
     alpha = 'abcde'
     skipper = SkipObject(alpha)
