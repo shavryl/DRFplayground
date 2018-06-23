@@ -1,4 +1,4 @@
-from games.classmethods.class_employees import PizzaRobot, Server
+from games.classmethods.class_employees import PizzaRobot, Server, Processor
 
 
 class Customer:
@@ -32,6 +32,12 @@ class PizzaShop:
         self.chef.work()
         self.oven.bake()
         customer.pay(self.server)
+
+
+class Uppercase(Processor):
+
+    def converter(self, data):
+        return data.upper()
 
 
 if __name__ == "__main__":
