@@ -52,3 +52,13 @@ class Commuter4:
         return self.val + other
 
     __radd__ = __add__
+
+
+class Prod:
+
+    def __init__(self, val):
+        self.val = val
+
+    def __call__(self, other):
+        return self.val * other
+
