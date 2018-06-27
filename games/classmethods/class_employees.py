@@ -1,6 +1,7 @@
+from games.classmethods.class_pseudoprivate import ListTree
 
 
-class Employee:
+class Employee(ListTree):
 
     def __init__(self, name, salary=0):
         self.name   = name
