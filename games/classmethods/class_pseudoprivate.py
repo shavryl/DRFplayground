@@ -49,3 +49,11 @@ class ListTree:
         above = self.__listclass(self.__class__, 4)
         return '<Instance of {0}, address {1}:\n{2}{3}>'.format(
             self.__class__.__name__, id(self), here, above)
+
+
+class Spam:
+
+    def doit(self, message):
+        print(message)
+
+
