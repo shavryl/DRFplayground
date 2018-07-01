@@ -1,3 +1,4 @@
+from games.classmethods.classtools import ListInstance
 
 
 class C1:
@@ -51,7 +52,10 @@ class ListTree:
             self.__class__.__name__, id(self), here, above)
 
 
-class Spam:
+class Spam(ListInstance):
+
+    def __init__(self):
+        self.data = 'food'
 
     def doit(self, message):
         print(message)
@@ -98,12 +102,6 @@ class Negate:
 
     def __repr__(self):
         return str(self.val)
-
-
-
-
-
-
 
 
 

@@ -33,3 +33,18 @@ if __name__ == '__main__':
     X, Y = TopTest(), SubTest()      # Make two instances
     print(X)                         # Show all instance attrs
     print(Y)                         # Show lowest class name
+
+
+class ListInstance:
+
+    def __str__(self):
+
+        return '<Instanse of %s, address %s:\n%s>' % (
+            self.__class__.__name__, id(self), self.__attrnames())
+
+    def __attrnames(self):
+
+        result = ''
+        for attr in sorted(self.__dict__):
+            result += '\tname %s=%s\n' % (attr, self.__dict__[attr])
+        return result
