@@ -82,3 +82,8 @@ class ListTree:
             else:
                 result += spaces + '{0}={1}\n'.format(attr, getattr(obj, attr))
         return result
+
+
+def factory(aClass, *args, **kwargs):
+
+    return aClass(*args, **kwargs)

@@ -21,17 +21,17 @@ class Oven:
 
 class PizzaShop:
 
-    def __init__(self):
-        self.server = Server('Pat')
-        self.chef = PizzaRobot('Bob')
+    def __init__(self, server, chef, customer):
+        self.server = server
+        self.chef = chef
+        self.customer = customer
         self.oven = Oven()
 
-    def order(self, name):
-        customer = Customer(name)
-        customer.order(self.server)
+    def order(self):
+        self.customer.order(self.server)
         self.chef.work()
         self.oven.bake()
-        customer.pay(self.server)
+        self.customer.pay(self.server)
 
 
 class Uppercase(Processor):
