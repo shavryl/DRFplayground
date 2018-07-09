@@ -1,4 +1,4 @@
-from games.classmethods.classtools import AttrDisplay
+from games.classmethods.class_tools import AttrDisplay
 
 
 class Person(AttrDisplay):

@@ -1,4 +1,4 @@
-from games.classmethods.classtools import ListTree
+from games.classmethods.class_tools import ListTree
 
 
 class Employee(ListTree):

@@ -148,3 +148,16 @@ def tracer(func):
         return func(*args)
     oncall.calls = 0
     return oncall
+
+
+def decorator(cls):
+
+    class Proxy:
+
+        def __init__(self, *args):
+            self.wrapped = cls(*args)
+
+        def __getattr__(self, name):
+            return getattr(self.wrapped, name)
+
+    return Proxy

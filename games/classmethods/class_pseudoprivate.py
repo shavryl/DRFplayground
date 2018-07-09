@@ -1,4 +1,4 @@
-from games.classmethods.classtools import ListInstance
+from games.classmethods.class_tools import ListInstance
 
 
 class C1:
