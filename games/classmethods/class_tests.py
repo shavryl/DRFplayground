@@ -8,21 +8,21 @@ class AdderTest(TestCase):
 
     def test_create_class(self):
 
-        test1 = Adder()
+        test1 = Adder(self.x, self.y)
 
-        self.assertEqual(test1.add(self.x, self.y), 'not implemented')
+        self.assertEqual(test1.add(), 'not implemented')
 
     def test_list_adder(self):
 
-        test2 = ListAdder()
+        test2 = ListAdder(self.x, self.y)
 
         self.assertTrue(test2)
-        self.assertEqual(test2.add(self.x, self.y), 13)
+        self.assertEqual(test2.add(), 13)
 
     def test_dict_adder(self):
 
-        test3 = DictAdder()
+        test3 = DictAdder(self.x, self.y)
 
         self.assertTrue(test3)
-        self.assertEqual(test3.add(self.x, self.y), {'x': 0, 'y': 13})
+        self.assertEqual(test3.add(), {'x': 0, 'y': 13})
 

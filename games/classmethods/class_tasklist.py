@@ -2,22 +2,29 @@
 
 class Adder(object):
 
-    def add(self, x, y):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.data = dict()
+
+    def __add__(self, other):
+        return self.add()
+
+    def add(self):
         return 'not implemented'
 
 
 class ListAdder(Adder):
 
-    def add(self, x, y):
-        return x + y
+    def add(self):
+        return self.x + self.y
 
 
 class DictAdder(Adder):
 
-    def add(self, x, y):
-        data = dict()
+    def add(self):
 
-        data['x'] = x
-        data['y'] = y
+        self.data['x'] = self.x
+        self.data['y'] = self.y
 
-        return data
+        return self.data
