@@ -161,3 +161,16 @@ def decorator(cls):
             return getattr(self.wrapped, name)
 
     return Proxy
+
+
+class FormatError(Exception):
+
+    logfile = 'logfile.txt'
+
+    def __init__(self, line, file):
+        self.line = line
+        self.file = file
+
+    def logerror(self):
+        log = open(self.logfile, 'a')
+        print('Error at: ', self.file, self.line, file=log)
