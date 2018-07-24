@@ -1,23 +1,46 @@
 
 
+class Name:
+    """
+    example of descriptor
+    """
+    def __get__(self, instance, owner):
+        print('fetch name: ')
+        return instance._name
+
+    def __set__(*args):
+        raise AttributeError('Is not permitted to set')
+
+    def __delete__(self, instance):
+        print('remove ')
+        del instance._name
+
+
 class Person:
 
     def __init__(self, name):
         self._name = name
 
-    def get_name(self):
-        print('fetch ...')
+    name = Name()
+
+
+class Profile:
+
+    def __init__(self, name):
+        self._name = name
+
+    @property
+    def name(self):
         return self._name
 
-    def set_name(self, value):
-        print('change ')
-        self._name = value
+    @name.setter
+    def name(self, value):
+        # setter can dynamically check conditions
+        self._name = value + ' krosaucheg'
 
-    def del_name(self):
-        print('remove ')
+    @name.deleter
+    def name(self):
+        # before deletion of profile model
+        # we could check child\parent relations
+        # and make cases for both variants
         del self._name
-
-    name = property(get_name, set_name, del_name, "name property docs")
-
-
-
