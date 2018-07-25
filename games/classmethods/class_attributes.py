@@ -44,3 +44,42 @@ class Profile:
         # we could check child\parent relations
         # and make cases for both variants
         del self._name
+
+
+class DescState:
+
+    def __init__(self, value):
+        self.value = value
+
+    def __get__(self, instance, owner):
+        print('DescrState get')
+        return self.value * 10
+
+    def __set__(self, instance, value):
+        print('DescrState set')
+        self.value = value
+
+
+# client Class
+class CalcAttrs:
+
+    X = DescState(2)
+    Y = 3
+
+    def __init__(self):
+        self.Z = 4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
