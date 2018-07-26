@@ -16,14 +16,6 @@ class Name:
         del instance._name
 
 
-class Person:
-
-    def __init__(self, name):
-        self._name = name
-
-    name = Name()
-
-
 class Profile:
 
     def __init__(self, name):
@@ -110,3 +102,39 @@ class Client:
 
     managed = DescBoth('spam')
 
+
+class Property:
+
+    def __init__(self, fget=None, fset=None, fdel=None, doc=None):
+        self.fget = fget
+        self.fset = fset
+        self.fdel = fdel
+        self.__doc__ = doc
+
+    def __get__(self, instance, instancetype=None):
+        if instance is None:
+            return self
+        if self.fget is None:
+            raise AttributeError("Can't get attribute")
+        return self.fget
+
+    def __set__(self, instance, value):
+        if self.fset is None:
+            raise AttributeError("Can't set attribute")
+        self.fset(instance, value)
+
+    def __delete__(self, instance):
+        if self.fdel is None:
+            raise AttributeError("Can't delete attribute")
+        self.fdel(instance)
+
+
+class Person:
+
+    def get_name(self):
+        print('getname ')
+
+    def set_name(self):
+        print('setname ')
+
+    name = Property(get_name, set_name)
