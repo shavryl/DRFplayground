@@ -70,16 +70,43 @@ class CalcAttrs:
         self.Z = 4
 
 
+class InstState:
+
+    def __get__(self, instance, owner):
+        print('Instance get')
+        return instance._X * 10
+
+    def __set__(self, instance, value):
+        print('Instance set')
+        instance._X = value
 
 
+class NextCalc:
+
+    X = InstState()
+    Y = 3
+
+    def __init__(self):
+        self._X = 2
+        self.Z = 4
 
 
+class DescBoth:
+
+    def __init__(self, data):
+        self.data = data
+
+    def __get__(self, instance, owner):
+        return '%s, %s' % (self.data, instance.data)
+
+    def __set__(self, instance, value):
+        instance.data = value
 
 
+class Client:
 
+    def __init__(self, data):
+        self.data = data
 
-
-
-
-
+    managed = DescBoth('spam')
 
