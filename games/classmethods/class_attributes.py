@@ -131,13 +131,27 @@ class Property:
 
 class Person:
 
-    def get_name(self):
-        print('getname ')
+    def __init__(self, name):
+        self._name = name
 
-    def set_name(self):
-        print('setname ')
+    def __getattr__(self, attr):
+        print('get ' + attr)
+        if attr == 'name':
+            return self._name
+        else:
+            raise AttributeError(attr)
 
-    name = Property(get_name, set_name)
+    def __setattr__(self, attr, value):
+        print('set: ' + attr)
+        if attr == 'name':
+            attr = '_name'
+        self.__dict__[attr] = value
+
+    def __delattr__(self, attr):
+        print('del ' + attr)
+        if attr == 'name':
+            attr = '_name'
+        del self.__dict__[attr]
 
 
 class Wrapper:
