@@ -173,3 +173,19 @@ class Wrapper:
         # or possible solution is
         # object.__setattr__(self, 'other', value)
 
+
+class AttrSqare:
+
+    def __init__(self, start):
+        self.value = start
+
+    def __getattr__(self, attr):
+        if attr == 'X':
+            return self.value ** 2
+        else:
+            raise AttributeError(attr)
+
+    def __setattr__(self, attr, value):
+        if attr == 'X':
+            attr = 'value'
+        self.__dict__[attr] = value
