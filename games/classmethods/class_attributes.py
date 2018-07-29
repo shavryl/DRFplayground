@@ -138,3 +138,24 @@ class Person:
         print('setname ')
 
     name = Property(get_name, set_name)
+
+
+class Wrapper:
+
+    def __init__(self, object):
+        self.wrapped = object
+
+    def __getattr__(self, attrname):
+        print('Trace ' + attrname)
+        return getattr(self.wrapped, attrname)
+
+    def __getattribute__(self, name):
+        # prevents recursive loop
+        x = object.__getattribute__(self, 'other')
+
+    def __setattr__(self, name, value):
+        # prevents recursive loop
+        self.__dict__['other'] = value
+        # or possible solution is
+        # object.__setattr__(self, 'other', value)
+
