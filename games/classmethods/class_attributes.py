@@ -179,13 +179,32 @@ class AttrSqare:
     def __init__(self, start):
         self.value = start
 
-    def __getattr__(self, attr):
+    def __getattribute__(self, attr):
         if attr == 'X':
             return self.value ** 2
         else:
-            raise AttributeError(attr)
+            return object.__getattribute__(self, attr)
 
     def __setattr__(self, attr, value):
         if attr == 'X':
             attr = 'value'
-        self.__dict__[attr] = value
+        object.__setattr__(self, attr, value)
+
+
+class GetAttr:
+
+    attr1 = 1
+
+    def __init__(self):
+        self.attr2 = 2
+
+    def __getattr__(self, attr):
+        print('get ' + attr)
+        if attr == 'attr3':
+            return 3
+        else:
+            raise AttributeError(attr)
+
+
+class GetAttribute:
+    ...
