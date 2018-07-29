@@ -207,4 +207,61 @@ class GetAttr:
 
 
 class GetAttribute:
-    ...
+
+    attr = 1
+
+    def __init__(self):
+        self.attr2 = 2
+
+    def __getattribute__(self, attr):
+        print('get ' + attr)
+        if attr == 'attr3':
+            return 3
+        else:
+            return object.__getattribute__(self, attr)
+
+
+class Powers:
+
+    def __init__(self, square, cube):
+        self._square = square
+        self._cube = cube
+
+    def get_square(self):
+        return self._square ** 2
+
+    def set_square(self, value):
+        self._square = value
+
+    square = property(get_square, set_square)
+
+    def get_cube(self):
+        return self._cube ** 3
+
+    cube = property(get_cube)
+
+
+class DescSquare:
+
+    def __get__(self, instance, owner):
+        return instance._square ** 2
+
+    def __set__(self, instance, value):
+        instance._square = value
+
+
+class DescCube:
+
+    def __get__(self, instance, owner):
+        return instance._cube ** 3
+
+
+class DescPowers:
+
+    square = DescSquare()
+    cube = DescCube()
+
+    def __init__(self, square, cube):
+        self._square = square
+        self._cube = cube
+        
