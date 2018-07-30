@@ -129,31 +129,6 @@ class Property:
         self.fdel(instance)
 
 
-class Person:
-
-    def __init__(self, name):
-        self._name = name
-
-    def __getattr__(self, attr):
-        print('get ' + attr)
-        if attr == 'name':
-            return self._name
-        else:
-            raise AttributeError(attr)
-
-    def __setattr__(self, attr, value):
-        print('set: ' + attr)
-        if attr == 'name':
-            attr = '_name'
-        self.__dict__[attr] = value
-
-    def __delattr__(self, attr):
-        print('del ' + attr)
-        if attr == 'name':
-            attr = '_name'
-        del self.__dict__[attr]
-
-
 class Wrapper:
 
     def __init__(self, object):
@@ -193,32 +168,40 @@ class AttrSqare:
 
 class GetAttr:
 
-    attr1 = 1
+    eggs = 88
 
     def __init__(self):
-        self.attr2 = 2
+        self.spam = 77
+
+    def __len__(self):
+        print('len : 42')
+        return 42
 
     def __getattr__(self, attr):
-        print('get ' + attr)
-        if attr == 'attr3':
-            return 3
+        print('getattr ' + attr)
+        if attr == '__str__':
+            return lambda *args: '[Getattr str]'
         else:
-            raise AttributeError(attr)
+            return lambda *args: None
 
 
 class GetAttribute:
 
-    attr = 1
+    eggs = 88
 
     def __init__(self):
-        self.attr2 = 2
+        self.spam = 77
+
+    def __len__(self):
+        print('len : 42')
+        return 42
 
     def __getattribute__(self, attr):
-        print('get ' + attr)
-        if attr == 'attr3':
-            return 3
+        print('getattribute ' + attr)
+        if attr == '__str__':
+            return lambda *args: '[Getattribute str]'
         else:
-            return object.__getattribute__(self, attr)
+            return lambda *args: None
 
 
 class Powers:
