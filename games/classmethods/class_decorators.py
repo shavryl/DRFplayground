@@ -1,11 +1,11 @@
 
-# mothod decorator
+# method decorator
 def decorator(F):
 
     def wrapper(*args):
         # use F and args
         # F(*args) calls original func
-    return wrapper
+        return wrapper
 
 
 @decorator
@@ -31,3 +31,20 @@ class C:
 
     def __init__(self, x, y):
         self.attr = 'spam'
+
+
+class tracer:
+
+    def __init__(self, func):
+        self.calls = 0
+        self.func = func
+
+    def __call__(self, *args, **kwargs):
+        self.calls += 1
+        print('call %s to %s' % (self.calls, self.func.__name__))
+        self.func(*args)
+
+
+@tracer
+def spam(a, b, c):
+    print(a + b + c)
