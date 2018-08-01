@@ -42,9 +42,14 @@ class tracer:
     def __call__(self, *args, **kwargs):
         self.calls += 1
         print('call %s to %s' % (self.calls, self.func.__name__))
-        self.func(*args)
+        return self.func(*args, **kwargs)
 
 
 @tracer
 def spam(a, b, c):
     print(a + b + c)
+
+
+@tracer
+def eggs(x, y):
+    print(x ** y)
