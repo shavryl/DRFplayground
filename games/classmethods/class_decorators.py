@@ -45,6 +45,24 @@ class tracer:
         return self.func(*args, **kwargs)
 
 
+def both_tracer(func):
+    """
+    applies to both functions
+    and class methods
+    """
+    calls = 0
+
+    def on_call(*args, **kwargs):
+
+        nonlocal calls
+        calls +=1
+        print('call %s to %s' % (calls, func.__name__))
+
+        return func(*args, **kwargs)
+
+    return on_call
+
+
 @tracer
 def spam(a, b, c):
     print(a + b + c)
