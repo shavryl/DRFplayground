@@ -1,6 +1,9 @@
 import time
 
 
+instances = {}
+
+
 # method decorator
 def decorator(F):
 
@@ -70,6 +73,31 @@ def both_tracer(func):
         print('call %s to %s' % (calls, func.__name__))
 
         return func(*args, **kwargs)
+
+    return on_call
+
+
+def new_timer(label=''):
+
+    def decorator(func):
+        # multilevel state retention
+        def on_call(*args):
+            ...
+            func(*args)
+        return on_call
+    return decorator
+
+
+def singleton(aClass):
+    instance = None
+
+    def on_call(*args, **kwargs):
+        nonlocal instance
+
+        if instance == None:
+            instance = aClass(*args, **kwargs)
+
+        return instance
 
     return on_call
 

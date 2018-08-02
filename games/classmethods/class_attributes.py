@@ -1,4 +1,4 @@
-
+from games.classmethods.class_decorators import singleton
 
 class Name:
     """
@@ -16,6 +16,7 @@ class Name:
         del instance._name
 
 
+@singleton
 class Profile:
 
     def __init__(self, name):
@@ -247,4 +248,3 @@ class DescPowers:
     def __init__(self, square, cube):
         self._square = square
         self._cube = cube
-        
