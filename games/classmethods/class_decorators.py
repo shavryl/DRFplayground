@@ -88,14 +88,14 @@ def new_timer(label=''):
     return decorator
 
 
-def singleton(aClass):
+def singleton(cls):
     instance = None
 
     def on_call(*args, **kwargs):
         nonlocal instance
 
-        if instance == None:
-            instance = aClass(*args, **kwargs)
+        if instance is None:
+            instance = cls(*args, **kwargs)
 
         return instance
 
