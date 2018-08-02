@@ -1,3 +1,5 @@
+import time
+
 
 # method decorator
 def decorator(F):
@@ -72,12 +74,32 @@ def both_tracer(func):
     return on_call
 
 
+class timer:
 
-@tracer
+    def __init__(self, func):
+        self.func = func
+        self.alltime = 0
+
+    def __call__(self, *args, **kwargs):
+        start = time.clock()
+        result = self.func(*args, **kwargs)
+        elapsed = time.clock() - start
+        self.alltime += elapsed
+        print('%s: %.5f, %.5f' % (self.func.__name__,
+                                  elapsed, self.alltime))
+        return result
+
+
+@timer
 def spam(a, b, c):
     print(a + b + c)
 
 
-@tracer
+@timer
 def eggs(x, y):
     print(x ** y)
+
+
+spam(5, 7, 12)
+
+eggs(2, 6)
