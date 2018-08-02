@@ -42,7 +42,16 @@ class tracer:
     def __call__(self, *args, **kwargs):
         self.calls += 1
         print('call %s to %s' % (self.calls, self.func.__name__))
+
         return self.func(*args, **kwargs)
+
+    def __get__(self, instance, owner):
+
+        def wrapper(*args, **kwargs):
+
+            return self(instance, *args, **kwargs)
+
+        return wrapper
 
 
 def both_tracer(func):
@@ -61,6 +70,7 @@ def both_tracer(func):
         return func(*args, **kwargs)
 
     return on_call
+
 
 
 @tracer
