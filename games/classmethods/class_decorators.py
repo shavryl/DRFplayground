@@ -102,6 +102,19 @@ def singleton(cls):
     return on_call
 
 
+class singleton:
+
+    def __init__(self, cls):
+        self.cls = cls
+        self.instance = None
+
+    def __call__(self, *args, **kwargs):
+        if self.instance is None:
+            self.instance = self.cls(*args, **kwargs)
+
+        return self.instance
+
+
 class timer:
 
     def __init__(self, func):
