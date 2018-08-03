@@ -1,5 +1,6 @@
 from games.classmethods.class_decorators import singleton
 
+
 class Name:
     """
     example of descriptor
