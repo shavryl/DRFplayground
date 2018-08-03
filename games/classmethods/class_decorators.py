@@ -140,6 +140,20 @@ class timer:
         return result
 
 
+def rangetest(func):
+
+    def on_call(*pargs, **kargs):
+
+        argchecks = func.__annotations__
+
+        for check in argchecks:
+            print(check)
+
+        return func(*pargs, **kargs)
+
+    return on_call
+
+
 @InstTracer
 class Spam:
 
@@ -168,24 +182,42 @@ def trace(*args):
 
 class BuiltinsMixin:
 
+    def reroute(self, attr, *args, **kwargs):
+        return self.__class__.__getattr__(self, attr)(*args, **kwargs)
+
     def __add__(self, other):
-        return self._wrapped + other
+        return self.reroute('__add__', other)
 
     def __str__(self):
-        return str(self._wrapped)
+        return self.reroute('__str__')
 
     def __getitem__(self, index):
-        return self._wrapped[index]
+        return self.reroute('__getitem__', index)
 
     def __call__(self, *args, **kwargs):
-        return self._wrapped(*args, **kwargs)
+        return self.reroute('__call__', *args, **kwargs)
+
+
+class Builtins:
+
+    class ProxyDesc:
+
+        def __init__(self, attrname):
+            self.attrname = attrname
+
+        def __get__(self, instance, owner):
+            return getattr(instance._wrapped, self.attrname)
+
+    builtins = ['add', 'str', 'getitem', 'call']
+    for attr in builtins:
+        exec('__%s__ = ProxyDesc("__%s__")' % (attr, attr))
 
 
 def access_control(failIf):
 
     def on_decorator(cls):
 
-        class OnInstance(BuiltinsMixin):
+        class OnInstance(Builtins):
             def __init__(self, *args, **kwargs):
                 self._wrapped = cls(*args, **kwargs)
 
@@ -243,21 +275,9 @@ def register(obj):
     return obj
 
 
-@register
-def spam(x):
-    return x ** 2
+@rangetest
+def func(a: (1, 5), b, c: (0.0, 1.0)):
+    print(a + b + c)
 
 
-@register
-def ham(x):
-    return x ** 3
-
-
-@register
-class Eggs:
-
-    def __init__(self, x):
-        self.data = x ** 4
-
-    def __str__(self):
-        return str(self.data)
+func(1, 2, c=3)
