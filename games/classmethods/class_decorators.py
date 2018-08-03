@@ -157,3 +157,33 @@ class Person:
 
     def pay(self):
         return self.hours * self.rate
+
+
+registry = {}
+
+
+def register(obj):
+
+    registry[obj.__name__] = obj
+    return obj
+
+
+@register
+def spam(x):
+    return x ** 2
+
+
+@register
+def ham(x):
+    return x ** 3
+
+
+@register
+class Eggs:
+
+    def __init__(self, x):
+        self.data = x ** 4
+
+    def __str__(self):
+        return str(self.data)
+
