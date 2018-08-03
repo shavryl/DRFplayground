@@ -38,25 +38,34 @@ class C:
         self.attr = 'spam'
 
 
-class tracer:
+def Tracer(cls):
 
-    def __init__(self, func):
-        self.calls = 0
-        self.func = func
+    class Wrapper:
+        def __init__(self, *args, **kwargs):
+            self.fetches = 0
+            self.wrapped = cls(*args, **kwargs)
 
-    def __call__(self, *args, **kwargs):
-        self.calls += 1
-        print('call %s to %s' % (self.calls, self.func.__name__))
+        def __getattr__(self, attrname):
 
-        return self.func(*args, **kwargs)
+            print('Trace: ' + attrname)
+            self.fetches += 1
+            return getattr(self.wrapped, attrname)
 
-    def __get__(self, instance, owner):
+    return Wrapper
 
-        def wrapper(*args, **kwargs):
 
-            return self(instance, *args, **kwargs)
+class InstTracer:
 
-        return wrapper
+    def __init__(self, cls):
+        self.cls = cls
+
+    def __call__(self, *args):
+        self.wrapped = self.cls(*args)
+        return self
+
+    def __getattr__(self, attrname):
+        print('Trace: ' + attrname)
+        return getattr(self.wrapped, attrname)
 
 
 def both_tracer(func):
@@ -131,16 +140,20 @@ class timer:
         return result
 
 
-@timer
-def spam(a, b, c):
-    print(a + b + c)
+@InstTracer
+class Spam:
+
+    def display(self):
+        print('Spam!' * 8)
 
 
-@timer
-def eggs(x, y):
-    print(x ** y)
+@InstTracer
+class Person:
 
+    def __init__(self, name, hours, rate):
+        self.name = name
+        self.hours = hours
+        self.rate = rate
 
-spam(5, 7, 12)
-
-eggs(2, 6)
+    def pay(self):
+        return self.hours * self.rate
