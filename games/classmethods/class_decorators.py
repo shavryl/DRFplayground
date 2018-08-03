@@ -166,31 +166,54 @@ def trace(*args):
     if trace_me: print('[' + ' '.join(map(str, args)) + ']')
 
 
-def private(*privates):
+class BuiltinsMixin:
+
+    def __add__(self, other):
+        return self._wrapped + other
+
+    def __str__(self):
+        return str(self._wrapped)
+
+    def __getitem__(self, index):
+        return self._wrapped[index]
+
+    def __call__(self, *args, **kwargs):
+        return self._wrapped(*args, **kwargs)
+
+
+def access_control(failIf):
 
     def on_decorator(cls):
 
-        class OnInstance:
+        class OnInstance(BuiltinsMixin):
             def __init__(self, *args, **kwargs):
-                self.wrapped = cls(*args, **kwargs)
+                self._wrapped = cls(*args, **kwargs)
 
             def __getattr__(self, attr):
                 trace('get:', attr)
-                if attr in privates:
+                if failIf(attr):
                     raise TypeError('private attribute fetch: ' + attr)
                 else:
-                    return getattr(self.wrapped, attr)
+                    return getattr(self._wrapped, attr)
 
             def __setattr__(self, attr, value):
                 trace('set:', attr, value)
-                if attr == 'wrapped':
+                if attr == '_onInstance__wrapped':
                     self.__dict__[attr] = value
-                elif attr in privates:
+                elif failIf(attr):
                     raise TypeError('private attribute change: ' + attr)
                 else:
-                    setattr(self.wrapped, attr, value)
+                    setattr(self._wrapped, attr, value)
         return OnInstance
     return on_decorator
+
+
+def private(*attributes):
+    return access_control(failIf=(lambda attr: attr in attributes))
+
+
+def public(*attributes):
+    return access_control(failIf=(lambda attr: attr not in attributes))
 
 
 @private('data', 'size')
