@@ -8,10 +8,6 @@ class MetaOne(type):
         return type.__new__(meta, classname, supers, classdict)
 
 
-class Eggs:
-    ...
-
-
 class MetaTwo(type):
 
     def __new__(meta, classname, supers, classdict):
@@ -84,7 +80,8 @@ class Sub(Super):
         return 'eggs'
 
 
-print('making class')
+class Eggs:
+    ...
 
 
 class Spam(Eggs, metaclass=SubMetaObj()):
@@ -94,6 +91,70 @@ class Spam(Eggs, metaclass=SubMetaObj()):
         return self.data + arg
 
 
-print('making instance')
-X = Spam()
-print('data:', X.data, X.meth(2))
+def eggsfunc(obj):
+    return obj.value * 4
+
+def hamfunc(obj, value):
+    return obj.value + 'ham'
+
+
+class Extender(type):
+
+    def __new__(meta, classname, supers, classdict):
+        classdict['eggs'] = eggsfunc
+        classdict['ham'] = hamfunc
+        return type.__new__(meta, classname, supers, classdict)
+
+
+class MetaExtend(type):
+
+    def __new__(meta, classname, supers, classdict):
+        if True:
+            classdict['eggs'] = eggsfunc
+        else:
+            classdict['ham'] = hamfunc
+        return type.__new__(meta, classname, supers, classdict)
+
+
+# manage instances like decorator but with a metaclass
+def Tracer(classname, supers, classdict):
+    aClass = type(classname, supers, classdict)
+
+    class Wrapper:
+
+        def __init__(self, *args, **kargs):
+            self.wrapped = aClass(*args, **kargs)
+
+        def __getattr__(self, attrname):
+            print('Trace:', attrname)
+            return getattr(self.wrapped, attrname)
+    return Wrapper
+
+
+class Person(metaclass=Tracer):
+
+    def __init__(self, name, hours, rate):
+        self.name = name
+        self.hours = hours
+        self.rate = rate
+
+    def pay(self):
+        return self.hours * self.rate
+
+
+class Client1(metaclass=Extender):
+
+    def __init__(self, value):
+        self.value = value
+
+    def spam(self):
+        return self.value * 2
+
+
+class Client2(metaclass=Extender):
+    value = 'ni?'
+
+
+bob = Person('Bob', 40, 50)
+print(bob.name)
+print(bob.pay())
