@@ -23,6 +23,7 @@ class MetaTwo(type):
         print('...init class object:', list(Class.__dict__.keys()))
 
 
+# normal class instance serving as metaclass
 class MetaObj:
 
     def __call__(self, classname, supers, classdict):
@@ -40,10 +41,31 @@ class MetaObj:
         print('...init class object:', list(Class.__dict__.keys()))
 
 
+# instances inherit from classes and their supers normally
+class SuperMetaObj:
+
+    def __call__(self, classname, supers, classdict):
+        print('In supermetaobj.call: ', classname, supers, classdict, sep='\n...')
+        Class = self.__New__(classname, supers, classdict)
+        self.__Init__(Class, classname, supers, classdict)
+        return Class
+
+
+class SubMetaObj(SuperMetaObj):
+
+    def __New__(self, classname, supers, classdict):
+        print('In submeta.new: ', classname, supers, classdict, sep='\n...')
+        return type(classname, supers, classdict)
+
+    def __Init__(self, Class, classname, supers, classdict):
+        print('In submeta.init: ', classname, supers, classdict, sep='\n...')
+        print('... init class object: ', list(Class.__dict__.keys()))
+
+
 print('making class')
 
 
-class Spam(Eggs, metaclass=MetaTwo):
+class Spam(Eggs, metaclass=SubMetaObj()):
     data = 1
 
     def meth(self, arg):
