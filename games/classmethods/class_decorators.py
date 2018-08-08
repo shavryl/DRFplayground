@@ -54,6 +54,20 @@ def Tracer(cls):
     return Wrapper
 
 
+def tracer(func):
+    """
+    Use function, not class with __call__
+    Else self is decorator instance only
+    """
+    calls = 0
+    def onCall(*args, **kwargs):
+        nonlocal calls
+        calls += 1
+        print('call %s to %s' % (calls, func.__name__))
+        return func(*args, **kwargs)
+    return onCall
+
+
 class InstTracer:
 
     def __init__(self, cls):

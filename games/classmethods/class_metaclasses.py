@@ -1,3 +1,5 @@
+from types import FunctionType
+from games.classmethods.class_decorators import tracer
 
 
 class MetaOne(type):
@@ -131,15 +133,26 @@ def Tracer(classname, supers, classdict):
     return Wrapper
 
 
-class Person(metaclass=Tracer):
+class MetaTracer(type):
 
-    def __init__(self, name, hours, rate):
+    def __new__(meta, classname, supers, classdict):
+        for attr, attrval in classdict.items():
+            if type(attrval) is FunctionType:
+                classdict[attr] = tracer(attrval)
+        return type.__new__(meta, classname, supers, classdict)
+
+
+class Person(metaclass=MetaTracer):
+
+    def __init__(self, name, pay):
         self.name = name
-        self.hours = hours
-        self.rate = rate
+        self.pay = pay
 
-    def pay(self):
-        return self.hours * self.rate
+    def give_raise(self, percent):
+        self.pay *= (1.0 + percent)
+
+    def last_name(self):
+        return self.name.split()[-1]
 
 
 class Client1(metaclass=Extender):
@@ -153,8 +166,3 @@ class Client1(metaclass=Extender):
 
 class Client2(metaclass=Extender):
     value = 'ni?'
-
-
-bob = Person('Bob', 40, 50)
-print(bob.name)
-print(bob.pay())
