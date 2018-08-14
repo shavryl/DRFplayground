@@ -35,5 +35,5 @@ def load_db(dbfilename=dbfilename):
 
 
 if __name__ == '__main__':
-    from games.programming import db
+    from .init_data import db
     store_db(db)
