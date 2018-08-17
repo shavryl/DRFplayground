@@ -1,0 +1,4 @@
+Hello stream world
+Enter a number>5 squared is 25
+Enter a number>9 squared is 81
+Enter a number>Bye
