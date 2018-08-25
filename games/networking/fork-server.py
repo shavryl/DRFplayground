@@ -5,7 +5,7 @@ child processes share parent's socket descriptors; fork is less portable
 than threads--not yet on Windows, unless Cygwin or similar installed;
 """
 
-import os, time, sys
+import os, time, sys, signal, _signal
 from socket import *
 myPort = 50007
 myHost = ''
@@ -15,6 +15,7 @@ activeChildren = []
 sockobj = socket(AF_INET, SOCK_STREAM)
 sockobj.bind((myHost, myPort))
 sockobj.listen(5)
+signal.signal(signal.SIGCHLD, signal.SIG_IGN)
 
 
 def now():
