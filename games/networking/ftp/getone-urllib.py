@@ -13,7 +13,7 @@ from urllib.request import urlopen
 filename = '50MB.zip'
 password = getpass.getpass('anonymous')
 
-remoteaddr = 'ftp://speedtest.tele2.net/%s' % filename
+remoteaddr = 'ftp://speedtest.tele2.net/%s;type=i' % filename
 print('Downloading', remoteaddr)
 
 remotefile = urlopen(remoteaddr)
