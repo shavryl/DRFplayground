@@ -1,5 +1,7 @@
 import threading, random, time
 from games.concurrency.decorators import timeit
+from threading import Thread
+
 
 counter = 1
 
@@ -32,4 +34,10 @@ def main():
     thread2.join()
 
 
-main()
+class WorkerThread(Thread):
+    def __init__(self):
+        print("Hello world")
+        Thread.__init__(self)
+
+    def run(self):
+        print("Thread is now running")
