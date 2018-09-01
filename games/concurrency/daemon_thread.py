@@ -4,12 +4,15 @@ import threading, time
 def standart_thread():
     print("Starting my thread")
     time.sleep(20)
+    print(threading.main_thread())
     print("End standart thread")
+
 
 
 def daemon_thread():
     while True:
         print('Sended hartbeat from first daemon')
+        print("Total Number of Active Threads: {}".format(threading.active_count()))
         time.sleep(2)
 
 
