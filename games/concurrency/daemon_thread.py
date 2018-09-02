@@ -8,7 +8,6 @@ def standart_thread():
     print("End standart thread")
 
 
-
 def daemon_thread():
     while True:
         print('Sended hartbeat from first daemon')
