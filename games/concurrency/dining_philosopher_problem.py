@@ -1,5 +1,5 @@
 import threading, time, random
-from threading import Lock
+from threading import RLock
 
 
 class Philosopher(threading.Thread):
@@ -31,8 +31,8 @@ class Philosopher(threading.Thread):
                 print('Philosopher {} has released left fork'.format(threading.current_thread()))
 
 
-left = Lock()
-right = Lock()
+left = RLock()
+right = RLock()
 
 
 def process():
