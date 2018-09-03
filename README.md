@@ -8,4 +8,5 @@ Current themes:
 - DRF
 - OOP\OOD
 - concurrency
-- multyprocessing
+- multiprocessing
+- networking
