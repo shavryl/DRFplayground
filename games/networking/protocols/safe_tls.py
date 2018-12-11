@@ -14,7 +14,7 @@ def client(host, port, cafile=None):
     ssl_sock = context.wrap_socket(raw_sock, server_hostname=host)
 
     while True:
-        data = ssl_sock.rect(1024)
+        data = ssl_sock.recv(1024)
         if not data:
             break
         print(repr(data))
