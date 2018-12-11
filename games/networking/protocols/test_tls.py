@@ -3,9 +3,6 @@ import ctypes
 from pprint import pprint
 
 
-# Attempt a TLS connection and, if successful, report its properties
-
-
 def open_tls(context, address, server=False):
     raw_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     if server:
@@ -46,6 +43,7 @@ def describe(ssl_sock, hostname, server=False, debug=False):
             say('Whether name(s) match the hostname', message)
         for category, count in sorted(context.cert_store_stats().items()):
             say('Certificates loaded of type {}'.format(category), count)
+
     try:
         protocol_version = SSL_get_version(ssl_sock)
     except Exception:
@@ -66,19 +64,15 @@ def describe(ssl_sock, hostname, server=False, debug=False):
 
 
 class PySSLSocket(ctypes.Structure):
-    """
-    The first few fields of a PySSLSocket
-    (see Python's Modules/_ssl.c).
-    """
+    """The first few fields of a PySSLSocket (see Python's Modules/_ssl.c)."""
+
     _fields_ = [('ob_refcnt', ctypes.c_ulong), ('ob_type', ctypes.c_void_p),
                 ('Socket', ctypes.c_void_p), ('ssl', ctypes.c_void_p)]
 
 
 def SSL_get_version(ssl_sock):
-    """
-    Reach behind the scenes for a
-    socket's TLS protocol version
-    """
+    """Reach behind the scenes for a socket's TLS protocol version."""
+
     lib = ctypes.CDLL(ssl._ssl.__file__)
     lib.SSL_get_version.restype = ctypes.c_char_p
     address = id(ssl_sock._sslobj)
