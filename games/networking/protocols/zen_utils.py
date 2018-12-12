@@ -18,7 +18,7 @@ def get_answer(aphorism):
     return aphorisms.get(aphorism, b'Error: unknown aphorism.')
 
 
-def parce_command_line(description):
+def parse_command_line(description):
     """
     Parse command line and return
     a socket address.
