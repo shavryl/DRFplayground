@@ -1,5 +1,5 @@
 import argparse, random, socket
-from games.networking.protocols import zen_utils
+import zen_utils
 
 
 # Simple client that asks three questions then disconects.

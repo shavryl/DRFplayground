@@ -1,4 +1,4 @@
-from games.networking.protocols import zen_utils
+import zen_utils
 
 
 # Single-threaded server that serves one client at a time; others must wait.
