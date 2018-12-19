@@ -1,0 +1,27 @@
+To: Test Recipient <recipient@example.com>
+From: Test Sender <sender@example.com>
+Subject: Foundations of Python Networking Programming
+Date: Wed, 19 Dec 2018 12:51:17 +0200
+Message-ID: <154521667728.10998.9519344015814351047@stas-desktop>
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============4039055882900529208=="
+
+--===============4039055882900529208==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+<p>Hello,</p>
+<p>This is a <b>test message</b> from Chapter 12.</p>
+<p>- <i>Anonymous</i></p>
+
+--===============4039055882900529208==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+Hello,
+This is a MIME message from Chapter 12.
+- Anonymous
+
+--===============4039055882900529208==--
