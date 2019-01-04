@@ -21,7 +21,7 @@ for i in range(MAX + 1):
         expensive(i, j)
 print(expensive.cache_info())
 
-print('\nCleating cache:')
+print('\nClearing cache:')
 expensive.cache_clear()
 print(expensive.cache_info())
 
