@@ -16,7 +16,7 @@ httpbin==0.7.0
 idna==2.8
 IMAPClient==2.1.0
 itsdangerous==1.1.0
-Jinja2==2.10
+Jinja2==2.11.3
 jsonrpclib-pelix==0.3.2
 kiwisolver==1.0.1
 MarkupSafe==1.1.0
