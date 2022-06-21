@@ -21,7 +21,7 @@ jsonrpclib-pelix==0.3.2
 kiwisolver==1.0.1
 MarkupSafe==1.1.0
 matplotlib==3.0.2
-numpy==1.15.4
+numpy==1.22.0
 psycopg2==2.7.5
 py4j==0.10.7
 pycparser==2.19
